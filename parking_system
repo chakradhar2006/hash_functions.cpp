@@ -1,0 +1,63 @@
+
+
+
+
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int slots, n;
+    cout << "Enter number of parking slots: ";
+    cin >> slots;
+
+    // Create a safe, fixed-size array to store up to 500 parking slots
+    int parking[500];
+
+    // Initialize all slots to -1 (which means the slot is empty)
+    for (int i = 0; i < slots; i++) {
+        parking[i] = -1;
+    }
+
+    cout << "Enter number of vehicles: ";
+    cin >> n;
+
+    // Insert vehicles using hashing and linear probing
+    for (int i = 0; i < n; i++) {
+        int carNumber;
+        cout << "Enter vehicle registration number: ";
+        cin >> carNumber;
+
+        // Hash function: determines the starting slot
+        int index = carNumber % slots;
+        int start = index;
+
+        // Linear Probing: look for the next empty slot if this one is full
+        while (parking[index] != -1) {
+            index = (index + 1) % slots; // Move to next slot, wrapping around to 0 at the end
+
+            if (index == start) {
+                cout << "Parking lot is full!" << endl;
+                break;
+            }
+        }
+
+        // Place the car if an empty slot was found
+        if (parking[index] == -1) {
+            parking[index] = carNumber;
+            cout << "Vehicle parked at slot " << index + 1 << endl;
+        }
+    }
+
+    // Display parking slots layout
+    cout << "\n--- Parking Lot ---" << endl;
+    for (int i = 0; i < slots; i++) {
+        if (parking[i] == -1) {
+            cout << "Slot " << i + 1 << ": Empty" << endl;
+        } else {
+            cout << "Slot " << i + 1 << ": " << parking[i] << endl;
+        }
+    }
+
+    return 0;
+}
