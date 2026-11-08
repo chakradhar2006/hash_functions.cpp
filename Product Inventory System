@@ -1,0 +1,103 @@
+
+
+
+#include <iostream>
+using namespace std;
+
+// A custom structure packet to group information belonging to one single product
+struct Product {
+    int code;
+    int stock;
+    float price;
+};
+
+int main() {
+    int tableSize, n;
+    cout << "Enter hash table size: ";
+    cin >> tableSize;
+
+    // Create an array capable of storing up to 500 total Product structure groups
+    Product hashTable[500];
+
+    // Initialize all code values inside the slots to -1 to flag them as empty
+    for (int i = 0; i < tableSize; i++) {
+        hashTable[i].code = -1;
+    }
+
+    cout << "Enter number of products: ";
+    cin >> n;
+
+    // Insert products into database
+    for (int i = 0; i < n; i++) {
+        int code, stock;
+        float price;
+        cout << "\nEnter product code: ";
+        cin >> code;
+        cout << "Enter stock: ";
+        cin >> stock;
+        cout << "Enter price: ";
+        cin >> price;
+
+        int index = code % tableSize;
+        int start = index;
+
+        // Linear probing checking against internal code values
+        while (hashTable[index].code != -1) {
+            index = (index + 1) % tableSize;
+            if (index == start) {
+                cout << "Hash table is full!" << endl;
+                break;
+            }
+        }
+
+        // Fill structure data package into the open indexed slot
+        if (hashTable[index].code == -1) {
+            hashTable[index].code = code;
+            hashTable[index].stock = stock;
+            hashTable[index].price = price;
+            cout << "Product stored at index " << index << endl;
+        }
+    }
+
+    // Display current inventory details
+    cout << "\n--- Inventory ---\n";
+    for (int i = 0; i < tableSize; i++) {
+        if (hashTable[i].code == -1) {
+            cout << "Index " << i << ": Empty" << endl;
+        } else {
+            cout << "Index " << i
+                 << " | Code: " << hashTable[i].code
+                 << " | Stock: " << hashTable[i].stock
+                 << " | Price: " << hashTable[i].price << endl;
+        }
+    }
+
+    // Search product segment
+    int searchCode;
+    cout << "\nEnter product code to search: ";
+    cin >> searchCode;
+
+    int index = searchCode % tableSize;
+    int start = index;
+    bool found = false;
+
+    while (hashTable[index].code != -1) {
+        if (hashTable[index].code == searchCode) {
+            cout << "Product Found!" << endl;
+            cout << "Stock: " << hashTable[index].stock << endl;
+            cout << "Price: " << hashTable[index].price << endl;
+            found = true;
+            break;
+        }
+        index = (index + 1) % tableSize;
+        if (index == start) {
+            break;
+        }
+    }
+
+    if (!found) {
+        cout << "Product not found." << endl;
+    }
+
+    return 0;
+}
