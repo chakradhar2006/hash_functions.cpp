@@ -4,7 +4,7 @@ This repository contains modular C++ implementations of common data structure an
 
 ---
 
-## 📁 Repository Structure & Modules
+
 
 ### 1. Product Inventory System (`Product Inventory System`)
 * **File:** `Product Inventory System` ([View Code](https://github.com/chakradhar2006/hash_functions.cpp))
@@ -29,7 +29,6 @@ This repository contains modular C++ implementations of common data structure an
 
 ---
 
-## 🚀 Getting Started
 
 ### Prerequisites
 * A C++ compiler supporting C++11 or later (e.g., `g++`, `clang++`, or MSVC).
